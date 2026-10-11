@@ -2,23 +2,29 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1D2C8F">
   <title>Tabú en Español</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
     <h1>Tabú en Español</h1>
 
-    <div id="card" class="card hidden">
-      <div class="word" id="word"></div>
-      <ul class="taboo" id="taboo"></ul>
+    <div class="card-area">
+      <article id="card" class="card">
+        <div id="face" class="face hidden">
+          <h2 class="word" id="word"></h2>
+          <ul class="taboo" id="taboo"></ul>
+        </div>
+        <p id="message" class="message">Pulsa «Nueva carta» para empezar.</p>
+      </article>
     </div>
 
-    <p id="message" class="message">Pulsa el botón para sacar una carta.</p>
-
-    <button id="next">Nueva carta</button>
-    <p id="counter" class="counter"></p>
+    <button id="next" type="button">Nueva carta</button>
   </main>
 
   <script src="cards.js"></script>

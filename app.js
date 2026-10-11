@@ -12,19 +12,40 @@ const deck = shuffle(CARDS);
 let index = 0;
 
 const cardEl = document.getElementById("card");
+const faceEl = document.getElementById("face");
 const wordEl = document.getElementById("word");
 const tabooEl = document.getElementById("taboo");
 const messageEl = document.getElementById("message");
-const counterEl = document.getElementById("counter");
 const nextBtn = document.getElementById("next");
+
+// Restart the swap animation so it plays on every new card.
+function animateCard() {
+  cardEl.classList.remove("swap");
+  void cardEl.offsetWidth;
+  cardEl.classList.add("swap");
+}
+
+// Shrink the word until it fits on one line.
+function fitWord() {
+  wordEl.style.fontSize = "";
+  const style = getComputedStyle(wordEl);
+  const available = wordEl.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  const range = document.createRange();
+  range.selectNodeContents(wordEl);
+  let size = parseFloat(style.fontSize);
+  while (range.getBoundingClientRect().width > available && size > 16) {
+    size -= 1;
+    wordEl.style.fontSize = `${size}px`;
+  }
+}
 
 function showCard() {
   if (index >= deck.length) {
-    cardEl.classList.add("hidden");
+    faceEl.classList.add("hidden");
     messageEl.textContent = "¡Se acabaron las cartas! Recarga la página para barajar de nuevo.";
     messageEl.classList.remove("hidden");
     nextBtn.disabled = true;
-    counterEl.textContent = "";
+    animateCard();
     return;
   }
 
@@ -38,9 +59,14 @@ function showCard() {
     })
   );
 
-  cardEl.classList.remove("hidden");
+  faceEl.classList.remove("hidden");
   messageEl.classList.add("hidden");
-  counterEl.textContent = `Carta ${index} de ${deck.length}`;
+  fitWord();
+  animateCard();
 }
 
 nextBtn.addEventListener("click", showCard);
+
+// Re-fit once the web font loads (its width differs from the fallback) and on rotation.
+document.fonts.ready.then(fitWord);
+window.addEventListener("resize", fitWord);
