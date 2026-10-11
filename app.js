@@ -54,7 +54,9 @@ function showCard() {
   tabooEl.replaceChildren(
     ...card.taboo.map((t) => {
       const li = document.createElement("li");
-      li.textContent = t;
+      const span = document.createElement("span");
+      span.textContent = t;
+      li.append(span);
       return li;
     })
   );
